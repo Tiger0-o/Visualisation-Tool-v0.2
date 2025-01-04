@@ -7,9 +7,27 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.animation import FuncAnimation 
+import urllib3, PIL, numpy
+import numpy as np
+import requests
+from io import BytesIO
 
-uploadIconPath = r"C:\\Users\\zhaoc\\Downloads\\LiDAR Application\\upload-big-arrow.png"
-dropDownIconPath = r"C:\\Users\\zhaoc\\Downloads\\LiDAR Application\\arrow-down-sign-to-navigate.png"
+imageDropdownURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/arrow-down-sign-to-navigate.png"
+imageUploadURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/upload-big-arrow.png"
+
+def loadImage(url, size=(50, 50)):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            image = Image.open(BytesIO(response.content))
+            image = image.resize(size)
+            return ImageTk.PhotoImage(image)
+        else:
+            print(f"Failed to fetch image. HTTP Status: {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 global filePath
 filePath = str()
@@ -162,6 +180,8 @@ right_frame = tk.Frame(window, bg="white")
 right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 initializeEmptyPlot()
+imageUpload = loadImage(imageDropdownURL)
+imageDropdown = loadImage(imageUploadURL)
 
 titlelabel = tk.Label(
     master=window, 
@@ -174,10 +194,6 @@ titlelabel.pack(anchor='w', pady=(10, 20), padx=(20, 0))
 
 frameUpload = tk.Frame(window, bg="white")
 frameUpload.pack(pady=(0, 20), anchor='w', padx=(20, 0))
-
-imageUpload = Image.open(uploadIconPath)
-imageUpload = imageUpload.resize((50, 50))
-imageUpload = ImageTk.PhotoImage(imageUpload)
 
 uploadButton = tk.Button(
     frameUpload,
@@ -215,10 +231,6 @@ frameColour.pack(pady=(10, 20), anchor='w', padx=(20, 0))
 
 frameColourDesc = tk.Frame(frameColour, bg="white")
 frameColourDesc.pack(side=tk.LEFT)
-
-imageDropdown = Image.open(dropDownIconPath)
-imageDropdown = imageDropdown.resize((50, 50))
-imageDropdown = ImageTk.PhotoImage(imageDropdown)
 
 dropDownIcon = tk.Label(
     frameColourDesc,
