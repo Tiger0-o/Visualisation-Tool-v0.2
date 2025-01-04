@@ -185,11 +185,6 @@ initializeEmptyPlot()
 imageUpload = loadImage(imageDropdownURL)
 imageDropdown = loadImage(imageUploadURL)
 
-iconImage = loadImage(iconURL, size=(32, 32))  
-if iconImage:
-    window.iconphoto(True, iconImage) 
-
-
 titlelabel = tk.Label(
     master=window, 
     text='3D LiDAR Visualization Program', 
