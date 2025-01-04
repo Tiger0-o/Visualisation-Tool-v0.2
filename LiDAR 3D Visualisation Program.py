@@ -110,9 +110,9 @@ def visualise():
     def polarRec(distance, yaw_deg, pitch_deg):
         yaw = math.radians(yaw_deg)
         pitch = math.radians(pitch_deg)
-        x = round(distance * math.sin(pitch) * math.cos(yaw), 1)
-        y = round(distance * math.sin(pitch) * math.sin(yaw), 1)
-        z = round(distance * math.cos(pitch), 1)
+        x = round(distance * math.sin(yaw) * math.cos(pitch), 1)
+        y = round(distance * math.sin(yaw) * math.sin(pitch), 1)
+        z = round(distance * math.cos(yaw), 1)
         return x, y, z
 
     coordinates = [polarRec(d, y, p) for d, y, p in zip(r, yaw, pitch)]
