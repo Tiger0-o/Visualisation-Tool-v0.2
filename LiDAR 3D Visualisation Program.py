@@ -29,10 +29,10 @@ window.iconphoto(True, icon)
 right_frame = tk.Frame(window, bg="white")
 right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=20, pady=20)
 
-imageDropdownURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/upload-big-arrow.png"
-imageUploadURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/arrow-down-sign-to-navigate.png"
+imageDropdownURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application-Program-v0.2/03a1bbe2f2a46e8fede9c2c13db321ab0895a591/Animation%20Test%20(1).png"
+imageUploadURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application-Program-v0.2/03a1bbe2f2a46e8fede9c2c13db321ab0895a591/Animation%20Test%20(2).png"
 
-def loadImage(url, size=(50, 50)):
+def loadImage(url, size=(50,50)):
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -246,7 +246,7 @@ dropDownIcon = tk.Label(
     bg="white",
     bd=0
 )
-dropDownIcon.pack(side=tk.LEFT, padx=5, pady=5)
+dropDownIcon.pack(side=tk.LEFT, padx=5, pady=5, anchor='w')
 
 colourDesc = tk.Label(
     frameColourDesc,
