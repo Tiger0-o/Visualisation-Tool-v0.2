@@ -11,7 +11,9 @@ import urllib3, PIL, numpy
 import numpy as np
 import requests
 from io import BytesIO
+import ctypes
 
+iconURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/1968ccf2e09b8e05f13624bc6a6de57234bdc356/icon.png"
 imageDropdownURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/arrow-down-sign-to-navigate.png"
 imageUploadURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/upload-big-arrow.png"
 
@@ -110,9 +112,9 @@ def visualise():
     def polarRec(distance, yaw_deg, pitch_deg):
         phi = math.radians(yaw_deg)
         theta = math.radians(pitch_deg)
-        x = round(distance * math.sin(theta) * math.cos(phi), 1)
-        y = round(distance * math.sin(theta) * math.sin(phi), 1)
-        z = round(distance * math.cos(theta), 1)
+        x = round(distance * math.cos(theta) * math.cos(phi), 1)
+        y = round(distance * math.cos(theta) * math.sin(phi), 1)
+        z = round(distance * math.sin(theta), 1)
         return x, y, z
 
     coordinates = [polarRec(d, y, p) for d, y, p in zip(r, yaw, pitch)]
@@ -182,6 +184,11 @@ right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=20, pady=20)
 initializeEmptyPlot()
 imageUpload = loadImage(imageDropdownURL)
 imageDropdown = loadImage(imageUploadURL)
+
+iconImage = loadImage(iconURL, size=(32, 32))  
+if iconImage:
+    window.iconphoto(True, iconImage) 
+
 
 titlelabel = tk.Label(
     master=window, 
