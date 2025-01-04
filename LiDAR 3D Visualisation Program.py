@@ -11,11 +11,26 @@ import urllib3, PIL, numpy
 import numpy as np
 import requests
 from io import BytesIO
-import ctypes
 
-iconURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/1968ccf2e09b8e05f13624bc6a6de57234bdc356/icon.png"
-imageDropdownURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/arrow-down-sign-to-navigate.png"
-imageUploadURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/upload-big-arrow.png"
+window = tk.Tk()
+window.title("Visualisation Tool")
+window.geometry("1200x600")
+window.configure(bg="white")
+
+import ctypes
+iconURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application-Program-v0.2/3164e6d36620fc709c3f50d759d1716a9a58f417/iconLIDAR.ico"
+myappid = u"lidar.visualisation.application.bytiger"
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+response = requests.get(iconURL)
+icon = ImageTk.PhotoImage(Image.open(BytesIO(response.content)))
+window.iconphoto(True, icon)
+
+right_frame = tk.Frame(window, bg="white")
+right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+imageDropdownURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/upload-big-arrow.png"
+imageUploadURL = "https://raw.githubusercontent.com/Tiger0-o/LiDAR-Application/e06af5f9d7b3df5564dadb2a89b5a4f0bd4e5992/arrow-down-sign-to-navigate.png"
 
 def loadImage(url, size=(50, 50)):
     try:
@@ -33,10 +48,11 @@ def loadImage(url, size=(50, 50)):
 
 global filePath
 filePath = str()
+fontCustomisation = {'family':'Gotham','color':'#9ac0cd','size':15}
 
 programColours = {
     'colorOne': '#2a1d5b',
-    'colorTwo': '#266472',
+    'colorTwo': '#9ac0cd',
     'colorThree': '#33995a',
     'colorFour': '#9cbb21',
     'colorFive': '#d9c40a'
@@ -51,20 +67,20 @@ cmapColours = {
 }
 
 def uploadFile():
-    global filePath
+    global filePath, fileText
     filePath = filedialog.askopenfilename(filetypes=[("CSV Files", "*.csv")])
     if filePath:
+        uploadDesc.config(text=f"Valid CSV file uploaded") 
         print(f"File uploaded: {filePath}")
 
 def initializeEmptyPlot():
     global canvaemptyFig, emptyFig
     emptyFig, ax = plt.subplots(subplot_kw={"projection": "3d"}, figsize=(5, 5))
     
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
-    ax.set_title('LiDAR 3D Points Visualization')
-
+    ax.set_xlabel('X', fontdict=fontCustomisation)
+    ax.set_ylabel('Y', fontdict=fontCustomisation)
+    ax.set_zlabel('Z', fontdict=fontCustomisation)
+    ax.set_title('LiDAR 3D Points Visualization', fontdict=fontCustomisation, weight='bold')
 
     canvaemptyFig = FigureCanvasTkAgg(emptyFig, master=right_frame)
     canvaemptyFig.draw()
@@ -130,10 +146,10 @@ def visualise():
     selected_palette = colour.get().lower().split(': ')[1] if 'CHOSEN' in colour.get() else ''
     scatter = ax.scatter(xList, yList, zList, c=normalized_z, cmap=selected_palette, marker='o')
 
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
-    ax.set_title('LiDAR 3D Points Visualization')
+    ax.set_xlabel('X', fontdict=fontCustomisation)
+    ax.set_ylabel('Y', fontdict=fontCustomisation)
+    ax.set_zlabel('Z', fontdict=fontCustomisation)
+    ax.set_title('LiDAR 3D Points Visualization', fontdict=fontCustomisation, weight='bold')
 
     disconnect_zoom = zoom_factory(ax)
     pan_handler = panhandler(current_fig)
@@ -171,15 +187,6 @@ def updateColorButtons(palette):
             borderwidth=0
         )
         color_button.pack(side=tk.LEFT, padx=5, pady=1)
-
-
-window = tk.Tk()
-window.title("3D LiDAR Visualization Program")
-window.geometry("1200x600")
-window.configure(bg="white")
-
-right_frame = tk.Frame(window, bg="white")
-right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 initializeEmptyPlot()
 imageUpload = loadImage(imageDropdownURL)
@@ -220,14 +227,13 @@ uploadLabel.pack(anchor='w', padx=1)
 
 uploadDesc = tk.Label(
     frameUploadDesc,
-    text="DISTANCE/YAW/PITCH",
+    text="Please upload a vaild CSV file",
     font=("Gotham", 11),
     bg="white",
     fg=programColours['colorTwo']
 )
 uploadDesc.pack(anchor='w', padx=1)
 
-# Colour Palette Frame
 frameColour = tk.Frame(window, bg="white")
 frameColour.pack(pady=(10, 20), anchor='w', padx=(20, 0))
 
