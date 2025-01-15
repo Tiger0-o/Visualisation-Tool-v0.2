@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a lightweight Python-based application designed to visualize LiDAR data in an intuitive and user-friendly way. The app uses **Matplotlib** to create 2D and 3D visualizations from user-provided CSV files. It is specifically optimized for visualizing LiDAR data, making it an excellent tool for students, researchers, and hobbyists.
+This is a lightweight Python-based application designed to visualize LiDAR data in an intuitive and user-friendly way. The app uses **Matplotlib** to create 3D visualizations from user-provided CSV files. It is specifically optimized for visualizing LiDAR data, making it an excellent tool for students, and hobbyists.
 
 The application is compiled with **PyInstaller**, allowing it to run as a standalone executable without requiring a Python environment.
 
