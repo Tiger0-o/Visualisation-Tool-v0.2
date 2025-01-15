@@ -21,7 +21,7 @@ pitch
 Generates:
 **3D scatter plots** for distance, yaw, and pitch.
   
-**Standalone Executable**:
+- **Standalone Executable**:
 No Python installation required; just run the provided executable (.exe).
 
 
