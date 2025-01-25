@@ -30,3 +30,5 @@ No Python installation required; just run the provided executable (.exe).
 1. Download the executable from the [Google Drive Link](https://drive.google.com/file/d/1Oh24LKkOq4GPb122MzytcVS6SEJ1n0Ab/view?usp=sharing)
 2. Place the executable in the directory where your CSV files are stored (optional but convenient).
 
+##Explaination of the Program
+For a clearer interactive explanation on how the code works you can explore [here](https://dedale.dev/app/scans/98)
